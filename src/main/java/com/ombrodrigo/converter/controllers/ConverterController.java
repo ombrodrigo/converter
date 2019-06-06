@@ -1,8 +1,12 @@
 package com.ombrodrigo.converter.controllers;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import org.springframework.util.StreamUtils;
+
+import com.ombrodrigo.converter.bean.converters.CsvConverter;
+import com.ombrodrigo.converter.bean.converters.XmlConverter;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,17 +15,21 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class ConverterController {
 
-    @PostMapping("/converter/csv-to-json")
+    @Autowired
+    private CsvConverter csvConverter;
+
+    @Autowired
+    private XmlConverter xmlConverter;
+
+    @PostMapping("/converter/csv/json")
     public String csvToJson(@RequestParam("file") MultipartFile file) throws IOException {
         // text/csv
-        String response = StreamUtils.copyToString(file.getInputStream(), Charset.defaultCharset());
-        return response;
+        return csvConverter.convert(file.getInputStream());
     }
 
-    @PostMapping("/converter/xml-to-json")
+    @PostMapping("/converter/xml/json")
     public String xmlToJson(@RequestParam("file") MultipartFile file) throws IOException {
         // application/xml/csv
-        String response = StreamUtils.copyToString(file.getInputStream(), Charset.defaultCharset());
-        return response;
+        return xmlConverter.convert(file.getInputStream());
     }
 }

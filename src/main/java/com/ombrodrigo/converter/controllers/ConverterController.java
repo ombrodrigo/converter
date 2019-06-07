@@ -15,11 +15,14 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class ConverterController {
 
-    @Autowired
     private CsvConverter csvConverter;
+    private XmlConverter xmlConverter;
 
     @Autowired
-    private XmlConverter xmlConverter;
+    public ConverterController(CsvConverter csvConverter, XmlConverter xmlConverter) {
+        this.csvConverter = csvConverter;
+        this.xmlConverter = xmlConverter;
+    }
 
     @PostMapping("/converter/csv/json")
     public String csvToJson(@RequestParam("file") MultipartFile file) throws IOException {

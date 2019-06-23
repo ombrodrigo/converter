@@ -13,7 +13,6 @@ import org.xml.sax.SAXException;
 
 @Service
 public class XmlConverter implements IConverter {
-
     public String convert(InputStream stream) {
         try {
             Document document = createDocument(stream);

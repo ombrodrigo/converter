@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class CsvConverter implements IConverter {
 
     public String convert(InputStream stream) {
-
         Stream<String> lines = (new BufferedReader(new InputStreamReader(stream))).lines();
 
         ArrayList<String[]> splitLines = new ArrayList<>();
